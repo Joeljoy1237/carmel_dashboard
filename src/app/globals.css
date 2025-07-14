@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+
+@layer utilities {
+  .bg-primary {
+    @apply bg-blue-500;
+  }
+  .text-primary {
+    @apply text-blue-500;
+  }
+  .hover\:bg-primary-hover:hover {
+    @apply bg-blue-600;
+  }
+}
+
+
+/* 
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -23,4 +38,4 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
