@@ -33,13 +33,13 @@ export default function Sidebar() {
   return (
     <div className="w-[15vw] h-screen fixed border border-r-gray-200 bg-white md:flex lg:flex lg:flex-col md:flex-col hidden px-6 py-8 justify-between">
       <div className="flex flex-col gap-6">
-        <div className="flex items-center justify-center mb-4">
+        <div className="flex items-center justify-center">
           <Image
             src={"/logomain.png"}
             alt="Profile"
-            width={1000}
-            height={1000}
-            className="object-cover max-h-16 w-auto"
+            width={400}
+            height={400}
+            className="object-cover max-h-23 w-auto"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = "none";
             }}
@@ -48,7 +48,7 @@ export default function Sidebar() {
         <div className="text-center px-2 mb-2">
           <h2 className="text-xl font-semibold text-gray-800 line-clamp-2 text-center px-2">Welcome, Carmel College!</h2>
         </div>
-        <nav className="flex flex-col gap-2 mt-2">
+        <nav className="flex flex-col gap-2 mt-4">
           {menuItems?.map((menuItem, index) => (
             <Link
               className={`flex flex-row items-center gap-3 text-lg py-3 px-4 rounded-lg relative w-full transition-colors duration-150
