@@ -8,6 +8,16 @@ import { departmentMap } from '@/common/interface/interface'
 import { db } from '@/common/libs/firebase'
 import { collection, query, where, getDocs } from 'firebase/firestore'
 
+// Define a Faculty interface based on the fields used and related files
+type Faculty = {
+  id: string;
+  name?: string;
+  designation?: string;
+  title?: string;
+  image?: string;
+  // Add other fields as needed
+};
+
 export default function FacultyPage() {
   const params = useParams()
   let code = params?.department
@@ -18,7 +28,7 @@ export default function FacultyPage() {
       ? departmentMap[code.toUpperCase()]
       : 'Department'
 
-  const [facultyList, setFacultyList] = useState<any[]>([])
+  const [facultyList, setFacultyList] = useState<Faculty[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -34,7 +44,7 @@ export default function FacultyPage() {
         const querySnapshot = await getDocs(q)
         const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
         setFacultyList(data)
-      } catch (err: any) {
+      } catch (err: unknown) {
         setError('Failed to fetch faculty list')
       } finally {
         setLoading(false)

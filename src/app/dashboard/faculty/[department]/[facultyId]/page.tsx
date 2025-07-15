@@ -4,7 +4,7 @@ import { db, storage } from '@/common/libs/firebase';
 import { doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { ref, deleteObject } from 'firebase/storage';
 import { useParams } from 'next/navigation';
-import { departmentMap } from '@/common/interface/interface';
+import { departmentMap, MultiValues, SingleFields } from '@/common/interface/interface';
 import Link from 'next/link';
 import Image from 'next/image';
 const multiFields = [
@@ -21,21 +21,6 @@ const multiFields = [
   { key: 'positionsHeld', label: 'Positions held' },
   { key: 'website', label: 'Website' },
 ];
-
-type MultiValues = Record<string, string[]>;
-
-type SingleFields = {
-  name: string;
-  designation: string;
-  qualification: string;
-  specialization: string;
-  email: string;
-  contact: string;
-  joinDate: string;
-  departmentCode: string;
-  departmentName: string;
-  image?: string;
-};
 
 const FacultyDetailsPage: React.FC = () => {
   const params = useParams();

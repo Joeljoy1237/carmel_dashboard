@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase/firestore";
+// import { Timestamp } from "firebase/firestore";
 
 
 export const departmentMap: Record<string, string> = {
@@ -20,3 +20,18 @@ export const departments = [
     { name: 'Career Guidance & Placement', code: 'CGP' },
     { name: 'Physical Education', code: 'PE' },
 ]
+
+export type MultiValues = Record<string, string[]>;
+
+export type SingleFields = {
+  name: string;
+  designation: string;
+  qualification: string;
+  specialization: string;
+  email: string;
+  contact: string;
+  joinDate: string;
+  departmentCode: string;
+  departmentName: string;
+  image?: string;
+};
