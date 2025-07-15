@@ -1,16 +1,8 @@
 'use client'
 import React from 'react'
 import { useRouter } from 'next/navigation'
+import { departments } from '@/common/interface/interface'
 
-const departments = [
-  { name: 'Civil Engineering', code: 'CE' },
-  { name: 'Electrical & Electronics Engineering', code: 'EEE' },
-  { name: 'Mechanical Engineering', code: 'ME' },
-  { name: 'Computer Science & Engineering', code: 'CSE' },
-  { name: 'Science & Humanities', code: 'SH' },
-  { name: 'Career Guidance & Placement', code: 'CGP' },
-  { name: 'Physical Education', code: 'PE' },
-]
 
 const Page = () => {
   const router = useRouter()
@@ -30,7 +22,7 @@ const Page = () => {
             <button
               key={dep.code}
               className="flex items-center justify-between px-6 py-4 text-lg rounded-xl border border-gray-200 bg-gray-50 hover:bg-blue-100 active:bg-blue-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 group shadow-sm"
-              onClick={() => router.push(`/dashboard/faculty/${dep.code}`)}
+              onClick={() => router.push(`/dashboard/faculty/${dep.code.toLowerCase()}`)}
               aria-label={`Select ${dep.name}`}
             >
               <span className="font-medium text-left">{dep.name}</span>
