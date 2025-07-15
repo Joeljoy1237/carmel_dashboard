@@ -41,7 +41,6 @@ type SingleFields = {
 const FacultyForm: React.FC = () => {
   const router = useRouter();
   const params = useParams();
-  console.log(params);
   let departmentCode = params?.department;
   const facultyId = params?.facultyId;
   if (Array.isArray(departmentCode)) departmentCode = departmentCode[0];
@@ -163,6 +162,23 @@ const FacultyForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Basic required fields validation
+    const requiredFields = [
+      'name',
+      'designation',
+      'qualification',
+      'specialization',
+      'email',
+      'contact',
+      'joinDate',
+    ];
+    for (const field of requiredFields) {
+      if (!singleFields[field as keyof typeof singleFields] || (typeof singleFields[field as keyof typeof singleFields] === 'string' && singleFields[field as keyof typeof singleFields].toString().trim() === '')) {
+        easyToast({ type: 'error', message: `Please fill in the required field: ${field.charAt(0).toUpperCase() + field.slice(1)}` });
+        setUploading(false);
+        return;
+      }
+    }
     setUploading(true);
     let imageUrl = imagePreview || '';
     try {
@@ -194,14 +210,21 @@ const FacultyForm: React.FC = () => {
       };
       if (isEdit) {
         // Don't overwrite createdAt on update
-        delete data.createdAt;
-        const docRef = doc(db, 'faculties', typeof facultyId === 'string' ? facultyId : facultyId?.[0] ?? '');
-        await updateDoc(docRef, data);
-        easyToast({ type: 'success', message: 'Faculty updated successfully!' });
+        if ('createdAt' in data) {
+          delete (data as Record<string, unknown>).createdAt;
+        }
+
+      const id = typeof facultyId === 'string' ? facultyId : facultyId?.[0] ?? '';
+      const docRef = doc(db, 'faculties', id);
+
+      await updateDoc(docRef, data);
+
+      easyToast({ type: 'success', message: 'Faculty updated successfully!' });
       } else {
         await addDoc(collection(db, 'faculties'), data);
         easyToast({ type: 'success', message: 'Faculty added successfully!' });
       }
+      router.push(`/dashboard/faculty/${departmentCode}`);
       setSingleFields({
         name: '',
         designation: '',
@@ -226,7 +249,7 @@ const FacultyForm: React.FC = () => {
       setImageFile(null);
       setImagePreview(null);
       setOriginalImage(null);
-      router.push(`/dashboard/faculty/${departmentCode}`);
+      
     } catch (err) {
       easyToast({ type: 'error', message: isEdit ? 'Failed to update faculty.' : 'Failed to add faculty.' });
       console.error(err);
